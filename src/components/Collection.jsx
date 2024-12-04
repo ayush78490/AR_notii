@@ -5,39 +5,29 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { createDataItemSigner, dryrun } from "@permaweb/aoconnect";
 
-
-
-
-
-
-
-
-
-
 const Collection = () => {
   const [selectedIndexes, setSelectedIndexes] = useState([]);
-  const [allCollections,setAllCollections]=useState();
-
-useEffect(async()=>{
-
-
-const result = await dryrun({
-  process: "TFWDmf8a3_nw43GCm_CuYlYoylHAjCcFGbgHfDaGcsg",
-  tags: [
-    {
-      "name": "Action",
-      "value": "Get-Collections"
-    }
-  ],
-  signer: createDataItemSigner(window.arweaveWallet),
-  data: ""
-  
-
-});
- const parsedData=JSON.parse(result.Messages[0].Data)
- setAllCollections(parsedData.Collections);
-console.log("thisisparsed data",parsedData)
-},[]);
+  const [allCollections, setAllCollections] = useState([]);
+  const [latestCollections, setLatestCollections] = useState([]);
+  useEffect(async () => {
+    const result = await dryrun({
+      process: "TFWDmf8a3_nw43GCm_CuYlYoylHAjCcFGbgHfDaGcsg",
+      tags: [
+        {
+          name: "Action",
+          value: "Get-Collections",
+        },
+      ],
+      signer: createDataItemSigner(window.arweaveWallet),
+      data: "",
+    });
+    const parsedData = JSON.parse(result.Messages[0].Data);
+    setAllCollections(parsedData.Collections);
+    let temparr = parsedData.Collections.slice(0, 8);
+    setLatestCollections(temparr);
+    console.log("this is parsedData.Collections", parsedData.Collections);
+    console.log("Hardcoded DB Connections");
+  }, []);
 
   const handleImageClick = (card, index) => {
     // Toggle the selection of the clicked card
@@ -49,7 +39,9 @@ console.log("thisisparsed data",parsedData)
       }
     });
 
-    alert(`The title of the card is "${card.name}" and is added for future notification.`);
+    alert(
+      `The title of the card is "${card.name}" and is added for future notification.`
+    );
   };
 
   const settings = {
@@ -87,7 +79,7 @@ console.log("thisisparsed data",parsedData)
         <div className="container">
           <div className="title-wrapper">
             <h2 className="headline-md section-title text-center">
-              Top Collections
+              Latest Collections
             </h2>
 
             <a href="#" className="btn-link link:hover">
@@ -99,7 +91,7 @@ console.log("thisisparsed data",parsedData)
           <div className="slider_wrapper">
             <ul className="slider_container">
               <Slider {...settings}>
-                {collection.map((card, index) => (
+                {latestCollections?.map((card, index) => (
                   <li className="slider-item" key={index}>
                     <div className="collection-card card">
                       <figure
@@ -107,7 +99,7 @@ console.log("thisisparsed data",parsedData)
                         onClick={() => handleImageClick(card, index)}
                       >
                         <img
-                          src={card?.featured_image}
+                          src={`https://arweave.net/${card?.Thumbnail}`}
                           width="500"
                           height="500"
                           loading="lazy"
@@ -118,13 +110,17 @@ console.log("thisisparsed data",parsedData)
 
                       <div className="card-content">
                         <div className="card-profile">
-                          <img
-                            src={card?.avatar}
-                            width="64"
-                            height="64"
-                            loading="lazy"
-                            alt="CrazyAnyone profile"
-                          />
+                          {card?.Banner ? (
+                            <img
+                              src={`https://arweave.net/${card?.Banner}`}
+                              width="64"
+                              height="64"
+                              loading="lazy"
+                              alt="CrazyAnyone profile"
+                            />
+                          ) : (
+                            <div style={{ marginTop: "50px" }}></div>
+                          )}
 
                           {selectedIndexes.includes(index) && (
                             <ion-icon
@@ -137,17 +133,30 @@ console.log("thisisparsed data",parsedData)
 
                         <h3 className="title-md card-title">
                           <a href="#" className="link:hover">
-                            {card?.name}
+                            {card?.Name}
                           </a>
                         </h3>
 
                         <p className="label-md card-author">
                           by{" "}
-                          <a href="#" className="link">
-                            {card?.creator}
+                          <a
+                            href="#"
+                            className="link"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              if (card?.Creator) {
+                                navigator.clipboard
+                                  .writeText(card.Creator)
+                                  .then(() => alert("Copied to clipboard!"))
+                                  .catch((err) =>
+                                    console.error("Failed to copy text: ", err)
+                                  );
+                              }
+                            }}
+                          >
+                            {card?.Creator}
                           </a>
                         </p>
-                        <p className="card-text">{card?.items} Items</p>
                       </div>
                     </div>
                   </li>

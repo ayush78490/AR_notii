@@ -2,14 +2,6 @@
   #main.css
 \*-----------------------------------*/
 
-/**
- * copyright 2022 codewithsadee
- */
-
-/*-----------------------------------*\
-  #CUSTOM PROPERTY
-\*-----------------------------------*/
-
 :root {
   /**
    * colors
@@ -1259,14 +1251,6 @@ body {
   .header .container {
     max-width: 1120px;
   }
-
-  /**
-   * TOP COLLECTION
-   */
-
-  /**
-   * DISCOVER
-   */
 
   .discover .grid-list {
     grid-template-columns: repeat(4, 1fr);

@@ -18,14 +18,14 @@ const Footer = () => {
               </a>
 
               <p className="body-md footer-text">
-                Buy, sell and discover exclusive digital assets by the top
-                artists of NFTs world.
+                Get notifications instantly and then buy or sell exclusive
+                digital assets by the top artists of NFTs world.
               </p>
             </div>
 
             <ul className="footer-list">
               <li>
-                <p className="title-lg footer-list-title">Market Place</p>
+                <p className="title-lg footer-list-title">Our Features</p>
               </li>
 
               <li>
@@ -127,7 +127,7 @@ const Footer = () => {
               <ul>
                 <li>
                   <p className="title-lg footer-list-title">
-                    Download the web3 app
+                    Download the NotifiAR app
                   </p>
                 </li>
 
@@ -163,15 +163,15 @@ const Footer = () => {
                   <ion-icon name="mail-outline"></ion-icon>
 
                   <a href="mailto:metalink@nft.com" className="footer-link">
-                    web3@nft.com
+                    contact.notifi@gmail.com
                   </a>
                 </li>
 
                 <li className="footer-list-item">
                   <ion-icon name="call-outline"></ion-icon>
 
-                  <a href="tel:+111 234-567-891" className="footer-link">
-                    +111 234-567-891
+                  <a href="tel:+111 111-111-111" className="footer-link">
+                    +111 111-111-111
                   </a>
                 </li>
               </ul>
@@ -182,8 +182,8 @@ const Footer = () => {
         <div className="footer-bottom">
           <div className="container">
             <p className="body-md text-center copyright">
-              &copy; 2023 web3. Developed with <span className="span">❤</span>{" "}
-              by codingcirculate.
+              &copy; 2024 Developed with <span className="span">❤</span> by
+              NotifiAR Team.
             </p>
           </div>
         </div>

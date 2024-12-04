@@ -10,8 +10,9 @@ const Contact = () => {
           </h2>
 
           <p className="body-md section-text text-center">
-            We are a huge marketplace dedicated to connecting great artists of
-            all Metalink with their fans and unique token collectors!
+            We believe in connecting fans with the artists therefore you will
+            get instant notification whenever your favourites collections are
+            updated
           </p>
 
           <a href="#" className="btn btn-primary">

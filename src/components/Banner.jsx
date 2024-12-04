@@ -6,13 +6,12 @@ const Banner = () => {
       <section className="section hero" aria-label="home">
         <div className="container">
           <h1 className="headline-lg hero-title">
-            Discover rate collection or{" "}
-            <span className="span">Arts & NFTs</span>
+            Welcome to <span className="span">NotifiAR</span>
           </h1>
 
           <p className="section-text body-lg">
-            We are a huge marketplace dedicated to connecting great artists of
-            all web3 with their fans and unique token collectors!
+            A place where you can choose to get notification instantly whenever
+            your favourite creator uploads a collection or asset
           </p>
 
           <a href="#" className="btn">
