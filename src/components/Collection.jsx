@@ -29,7 +29,7 @@ const Collection = () => {
     console.log("Hardcoded DB Connections");
   }, []);
 
-  const handleImageClick = (card, index) => {
+  const handleImageClick = async (card, index) => {
     // Toggle the selection of the clicked card
     setSelectedIndexes((prevIndexes) => {
       if (prevIndexes.includes(index)) {
@@ -42,6 +42,14 @@ const Collection = () => {
     alert(
       `The title of the card is "${card.name}" and is added for future notification.`
     );
+
+    // Dynamically import the script and execute it
+    try {
+      const scriptModule = await import("./sendingMail"); // Update path as needed
+      scriptModule.default(); // Call the default export function
+    } catch (error) {
+      console.error("Error loading the script:", error);
+    }
   };
 
   const settings = {
