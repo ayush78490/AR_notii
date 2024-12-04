@@ -1,10 +1,57 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { collection } from "../data";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import { createDataItemSigner, dryrun } from "@permaweb/aoconnect";
+
+
+
+
+
+
+
+
+
 
 const Collection = () => {
+  const [selectedIndexes, setSelectedIndexes] = useState([]);
+  const [allCollections,setAllCollections]=useState();
+
+useEffect(async()=>{
+
+
+const result = await dryrun({
+  process: "TFWDmf8a3_nw43GCm_CuYlYoylHAjCcFGbgHfDaGcsg",
+  tags: [
+    {
+      "name": "Action",
+      "value": "Get-Collections"
+    }
+  ],
+  signer: createDataItemSigner(window.arweaveWallet),
+  data: ""
+  
+
+});
+ const parsedData=JSON.parse(result.Messages[0].Data)
+ setAllCollections(parsedData.Collections);
+console.log("thisisparsed data",parsedData)
+},[]);
+
+  const handleImageClick = (card, index) => {
+    // Toggle the selection of the clicked card
+    setSelectedIndexes((prevIndexes) => {
+      if (prevIndexes.includes(index)) {
+        return prevIndexes.filter((i) => i !== index); // Remove index if already selected
+      } else {
+        return [...prevIndexes, index]; // Add index if not already selected
+      }
+    });
+
+    alert(`The title of the card is "${card.name}" and is added for future notification.`);
+  };
+
   const settings = {
     dots: true,
     arrows: false,
@@ -33,6 +80,7 @@ const Collection = () => {
       },
     ],
   };
+
   return (
     <>
       <section className="section top-collection">
@@ -44,7 +92,6 @@ const Collection = () => {
 
             <a href="#" className="btn-link link:hover">
               <span className="span">See More</span>
-
               <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
             </a>
           </div>
@@ -55,7 +102,10 @@ const Collection = () => {
                 {collection.map((card, index) => (
                   <li className="slider-item" key={index}>
                     <div className="collection-card card">
-                      <figure className="card-banner img-holder">
+                      <figure
+                        className="card-banner img-holder"
+                        onClick={() => handleImageClick(card, index)}
+                      >
                         <img
                           src={card?.featured_image}
                           width="500"
@@ -76,10 +126,13 @@ const Collection = () => {
                             alt="CrazyAnyone profile"
                           />
 
-                          <ion-icon
-                            name="checkmark-circle"
-                            aria-hidden="true"
-                          ></ion-icon>
+                          {selectedIndexes.includes(index) && (
+                            <ion-icon
+                              name="checkmark-circle"
+                              aria-hidden="true"
+                              style={{ color: "green", fontSize: "24px" }}
+                            ></ion-icon>
+                          )}
                         </div>
 
                         <h3 className="title-md card-title">
@@ -105,7 +158,6 @@ const Collection = () => {
 
           <a href="#" className="btn-link link:hover">
             <span className="span">See More</span>
-
             <ion-icon name="arrow-forward" aria-hidden="true"></ion-icon>
           </a>
         </div>
